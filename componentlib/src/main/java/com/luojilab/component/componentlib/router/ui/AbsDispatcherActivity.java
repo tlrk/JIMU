@@ -110,7 +110,7 @@ public abstract class AbsDispatcherActivity extends AppCompatActivity {
     protected abstract void onVerifyFailed(@Nullable Throwable throwable);
 
     /**
-     * get exception when handle openUri
+     * get exception when handle openUriWithIntent
      */
     protected abstract void onExceptionWhenOpenUri(Uri uri, Exception e);
 

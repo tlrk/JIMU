@@ -84,7 +84,7 @@ public class DispatcherActivity extends AbsDispatcherActivity {
         Author author = new Author();
         author.setName("leobert");
         author.setCounty("China");
-        UIRouter.getInstance().openUri(this,
+        UIRouter.getInstance().openUriWithIntent(this,
                 "DDComp://share/shareBook?bookName=Demo&author="
                         + JsonService.Factory.getSingletonImpl().toJsonString(author), null);
     }

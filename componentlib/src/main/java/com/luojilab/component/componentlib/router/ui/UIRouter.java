@@ -1,6 +1,7 @@
 package com.luojilab.component.componentlib.router.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -141,8 +142,23 @@ public class UIRouter implements IUIRouter {
     }
 
     @Override
+    public boolean openUriWithIntent(Context context, String url, Intent intent) {
+        return openUriWithIntent(context, Uri.parse(url), intent, 0);
+    }
+
+    @Override
+    public boolean openUriWithIntent(Context context, Uri uri, Intent intent) {
+        return openUriWithIntent(context, uri, intent, 0);
+    }
+
+    @Override
     public boolean openUri(Context context, Uri uri, Bundle bundle) {
         return openUri(context, uri, bundle, 0);
+    }
+
+    @Override
+    public boolean openUriWithIntent(Context context, Uri uri, Intent intent, Integer requestCode) {
+        return openUri(context, uri, intent,  null, requestCode);
     }
 
     @Override
@@ -163,15 +179,21 @@ public class UIRouter implements IUIRouter {
 
     @Override
     public boolean openUri(Context context, Uri uri, Bundle bundle, Integer requestCode) {
+        return openUri(context, uri, null, bundle, requestCode);
+    }
+
+    private boolean openUri(Context context, Uri uri, Intent intent, Bundle bundle, Integer requestCode) {
         for (IComponentRouter temp : uiRouters) {
             try {
                 //ignore params check
                 VerifyResult verifyResult = temp.verifyUri(uri,bundle,false);
-                if (verifyResult.isSuccess() && temp.openUri(context, uri, bundle, requestCode))
-                    return true;
-//                if (temp.verifyUri(uri) && temp.openUri(context, uri, bundle, requestCode)) {
-//                    return true;
-//                }
+                if (verifyResult.isSuccess()) {
+                    if (intent != null) {
+                        return temp.openUriWithIntent(context, uri, intent, requestCode);
+                    } else {
+                        return temp.openUri(context, uri, bundle, requestCode);
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

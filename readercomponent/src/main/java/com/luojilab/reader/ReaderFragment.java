@@ -1,5 +1,6 @@
 package com.luojilab.reader;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -53,6 +54,13 @@ public class ReaderFragment extends Fragment {
                 }
             });
 
+            rootView.findViewById(R.id.tv_4).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goToShareActivityWithIntent();
+                }
+            });
+
         }
         return rootView;
     }
@@ -66,6 +74,13 @@ public class ReaderFragment extends Fragment {
         bundle.putString("bookName", "Gone with the Wind");
         bundle.putString("author", JsonService.Factory.getSingletonImpl().toJsonString(author));
         UIRouter.getInstance().openUri(getActivity(), "DDComp://share/shareBook", bundle);
+    }
+
+    private void goToShareActivityWithIntent() {
+        Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("key", "value");
+        UIRouter.getInstance().openUriWithIntent(getContext(), "DDComp://share/shareBook", intent);
     }
 
     // UI transfer with URI

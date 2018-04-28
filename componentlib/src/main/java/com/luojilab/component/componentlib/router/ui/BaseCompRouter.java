@@ -42,8 +42,18 @@ public abstract class BaseCompRouter implements IComponentRouter {
     }
 
     @Override
+    public boolean openUriWithIntent(Context context, String url, Intent intent) {
+        return openUriWithIntent(context, Uri.parse(url), intent);
+    }
+
+    @Override
     public boolean openUri(Context context, Uri uri, Bundle bundle) {
         return openUri(context, uri, bundle, 0);
+    }
+
+    @Override
+    public boolean openUriWithIntent(Context context, Uri uri, Intent intent) {
+        return openUriWithIntent(context, uri, intent, 0);
     }
 
     @Override
@@ -55,7 +65,16 @@ public abstract class BaseCompRouter implements IComponentRouter {
     }
 
     @Override
+    public boolean openUriWithIntent(Context context, Uri uri, Intent intent, Integer requestCode) {
+        return openUri(context, uri, intent, null, requestCode);
+    }
+
+    @Override
     public boolean openUri(Context context, Uri uri, Bundle bundle, Integer requestCode) {
+       return openUri(context, uri, null, bundle, requestCode);
+    }
+
+    private boolean openUri(Context context, Uri uri, Intent intent, Bundle bundle, Integer requestCode) {
         if (!hasInitMap) {
             initMap();
         }
@@ -77,7 +96,11 @@ public abstract class BaseCompRouter implements IComponentRouter {
             Map<String, String> params = UriUtils.parseParams(uri);
             Map<String, Integer> paramsType = paramsMapper.get(target);
             UriUtils.setBundleValue(bundle, params, paramsType);
-            Intent intent = new Intent(context, target);
+            if (intent == null) {
+                intent = new Intent(context, target);
+            } else {
+                intent.setClass(context, target);
+            }
             intent.putExtras(bundle);
             if (requestCode > 0 && context instanceof Activity) {
                 ((Activity) context).startActivityForResult(intent, requestCode);

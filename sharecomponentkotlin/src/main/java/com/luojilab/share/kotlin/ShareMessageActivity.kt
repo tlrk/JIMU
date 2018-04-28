@@ -35,7 +35,7 @@ class ShareMessageActivity : BaseActivity() {
         share_title.setOnClickListener {
 
             val author = AuthorKt("Barack Obama", 65, "New York")
-            UIRouter.getInstance().openUri(this,
+            UIRouter.getInstance().openUriWithIntent(this,
                     "DDComp://kotlin/javatest?bookName=NYTIME&author=" + JsonService.Factory.getSingletonImpl().toJsonString(author), null)
         }
 

@@ -1,11 +1,14 @@
 package com.luojilab.componentdemo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.luojilab.component.componentlib.router.ui.IComponentRouter;
 import com.luojilab.component.componentlib.router.ui.UIRouter;
+import com.luojilab.component.componentlib.router.ui.VerifyResult;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -36,7 +39,23 @@ public class UiRouterTest {
             }
 
             @Override
+            public boolean openUriWithIntent(Context context, String url, Intent intent) {
+                return false;
+            }
+
+            @Override
+            public boolean openUriWithIntent(Context context, Uri uri, Intent intent) {
+                return false;
+            }
+
+
+            @Override
             public boolean openUri(Context context, Uri uri, Bundle bundle) {
+                return false;
+            }
+
+            @Override
+            public boolean openUriWithIntent(Context context, Uri uri, Intent intent, Integer requestCode) {
                 return false;
             }
 
@@ -55,6 +74,12 @@ public class UiRouterTest {
                 if (uri == null)
                     return false;
                 return TARGET_URI.equals(uri.toString());
+            }
+
+            @NonNull
+            @Override
+            public VerifyResult verifyUri(Uri uri, Bundle bundle, boolean checkParams) {
+                return null;
             }
         });
     }

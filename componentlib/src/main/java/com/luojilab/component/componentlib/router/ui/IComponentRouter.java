@@ -1,6 +1,7 @@
 package com.luojilab.component.componentlib.router.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +21,13 @@ public interface IComponentRouter {
      */
     boolean openUri(Context context, String url, Bundle bundle);
 
+    boolean openUriWithIntent(Context context, String url, Intent intent);
+
+    boolean openUriWithIntent(Context context, Uri uri, Intent intent);
+
     boolean openUri(Context context, Uri uri, Bundle bundle);
+
+    boolean openUriWithIntent(Context context, Uri uri, Intent intent, Integer requestCode);
 
     boolean openUri(Context context, String url, Bundle bundle, Integer requestCode);
 
