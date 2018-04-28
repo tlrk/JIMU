@@ -50,7 +50,7 @@ public class UiRouterDemoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ui_router_demo);
 
-        lvCases = findViewById(R.id.uidemo_lv_cases);
+        lvCases = (ListView) findViewById(R.id.uidemo_lv_cases);
         lvCases.setAdapter(new SimpleAdapter(demos));
 
         lvCases.setOnItemClickListener(new AdapterView.OnItemClickListener() {

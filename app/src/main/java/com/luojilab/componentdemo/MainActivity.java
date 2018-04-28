@@ -29,8 +29,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        installReadBookBtn = findViewById(R.id.install_share);
-        uninstallReadBtn = findViewById(R.id.uninstall_share);
+        installReadBookBtn = (Button) findViewById(R.id.install_share);
+        uninstallReadBtn = (Button) findViewById(R.id.uninstall_share);
         installReadBookBtn.setOnClickListener(this);
         uninstallReadBtn.setOnClickListener(this);
 
